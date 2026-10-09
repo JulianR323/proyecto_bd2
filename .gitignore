@@ -1,0 +1,10 @@
+#ignora node_modiles en cualquier carpeta
+**node_/modules/**
+#Ignora archivos de entorno/secretos
+**/.env
+**/.env.local
+#Ignora carpetas de compilacion
+**/dist/
+**/build/
+#Ignora archivos de sistema
+.DS_Store
