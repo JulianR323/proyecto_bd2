@@ -1,5 +1,5 @@
 #ignora node_modiles en cualquier carpeta
-**node_/modules/
+**/node_/modules/
 #Ignora archivos de entorno/secretos
 **/.env
 **/.env.local
