@@ -1,0 +1,17 @@
+.contenido-contacto {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.tarjeta-contacto {
+    max-width: 700px;
+    margin: 0 auto 35px;
+}
+
+.tarjeta-contacto h2 {
+    margin-bottom: 18px;
+}
+
+.tarjeta-contacto textarea {
+    width: 100%;
+}

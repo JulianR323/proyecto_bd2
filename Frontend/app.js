@@ -141,5 +141,7 @@ if (formContacto) {
   });
 }
 
+
+
 // Llamado inicial al cargar la página
 cargarProductos();
