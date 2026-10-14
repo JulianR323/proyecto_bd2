@@ -15,3 +15,23 @@
 .tarjeta-contacto textarea {
     width: 100%;
 }
+
+.lista-contactos {
+    display: flex;
+    flex-direction: column;
+}
+
+.mensaje-contacto {
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.mensaje-contacto p {
+    overflow-wrap: anywhere;
+}
+
+.mensaje-contacto .fecha-contacto {
+    margin: 4px 0;
+    font-size: 0.85rem;
+    color: #64748b;
+}

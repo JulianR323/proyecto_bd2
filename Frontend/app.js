@@ -10,7 +10,13 @@ const stockInput = document.getElementById("stock");
 const btnGuardar = document.getElementById("btnGuardar");
 const btnCancelar = document.getElementById("btnCancelar");
 const tituloFormulario = document.getElementById("tituloFormulario");
+
 const formContacto = document.getElementById("formularioContacto");
+const listaContactos = document.getElementById("listaContactos");
+const nombreContactoInput = document.getElementById("nombreContacto");
+const correoContactoInput = document.getElementById("correoContacto");
+const asuntoContactoInput = document.getElementById("asuntoContacto");
+const mensajeContactoInput = document.getElementById("mensajeContacto");
 
 // 1. Función para consultar los productos y mostrarlos en el DOM (READ)
 async function cargarProductos() {
@@ -110,7 +116,6 @@ if (formulario) {
     }
   });
 }
-
 // 4. Eliminar un producto (DELETE)
 async function eliminarProducto(id) {
   const confirmar = confirm("¿Deseas eliminar este producto de la base de datos?");
@@ -120,28 +125,110 @@ async function eliminarProducto(id) {
     await fetch(`${API_URL}/productos/${id}`, {
       method: "DELETE",
     });
-
-    // Si estábamos editando ese mismo producto, cancelamos la edición
     if (productoId.value == id) {
       cancelarEdicion();
     }
-
-    cargarProductos(); // Refrescar la lista en pantalla
+    cargarProductos(); 
   } catch (error) {
     console.error("Error al eliminar producto:", error);
   }
 }
+// Cargar y mostrar el historial de mensajes de contacto
+async function cargarContactos() {
+  if (!listaContactos) return;
 
-// 5. Formulario de contacto (demostrativo en contacto.html)
-if (formContacto) {
-  formContacto.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("¡Mensaje de contacto enviado con éxito!");
-    formContacto.reset();
-  });
+  try {
+    const respuesta = await fetch(`${API_URL}/contactos`);
+    if (!respuesta.ok) {
+      throw new Error("No se pudo consultar el historial de mensajes");
+    }
+
+    const contactos = await respuesta.json();
+    listaContactos.innerHTML = "";
+
+    if (contactos.length === 0) {
+      listaContactos.textContent = "Aún no hay mensajes enviados.";
+      return;
+    }
+
+    contactos.forEach((contacto) => {
+      const elemento = document.createElement("article");
+      elemento.classList.add("mensaje-contacto");
+
+      const titulo = document.createElement("h3");
+      titulo.textContent = contacto.asunto;
+
+      const datos = document.createElement("p");
+      datos.textContent = `${contacto.nombre} · ${contacto.correo}`;
+
+      const fecha = document.createElement("p");
+      fecha.classList.add("fecha-contacto");
+      fecha.textContent = `Enviado: ${new Date(contacto.fecha_creacion).toLocaleString("es-CO")}`;
+
+      const mensaje = document.createElement("p");
+      mensaje.textContent = contacto.mensaje;
+
+      const acciones = document.createElement("div");
+      acciones.classList.add("acciones");
+
+      const botonEliminar = document.createElement("button");
+      botonEliminar.classList.add("btn-eliminar");
+      botonEliminar.textContent = "Eliminar";
+      botonEliminar.addEventListener("click", () => eliminarContacto(contacto.id));
+
+      acciones.appendChild(botonEliminar);
+      elemento.append(titulo, datos, fecha, mensaje, acciones);
+      listaContactos.appendChild(elemento);
+    });
+  } catch (error) {
+    console.error("Error al cargar los mensajes:", error);
+    listaContactos.textContent = "No se pudo cargar el historial de mensajes.";
+  }
 }
 
+// Eliminar un mensaje de contacto (DELETE)
+async function eliminarContacto(id) {
+  try {
+    await fetch(`${API_URL}/contactos/${id}`, {
+      method: "DELETE",
+    });
+    cargarContactos();
+  } catch (error) {
+    console.error("Error al eliminar el mensaje:", error);
+  }
+}
 
+// 5. Enviar un mensaje de contacto y actualizar el historial
+if (formContacto) {
+  formContacto.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-// Llamado inicial al cargar la página
+    const datosContacto = {
+      nombre: nombreContactoInput.value,
+      correo: correoContactoInput.value,
+      asunto: asuntoContactoInput.value,
+      mensaje: mensajeContactoInput.value,
+    };
+
+    try {
+      const respuesta = await fetch(`${API_URL}/contactos`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json"
+         },
+        body: JSON.stringify(datosContacto),
+      });
+      const resultado = await respuesta.json();
+      if (!respuesta.ok) {
+        throw new Error(resultado.mensaje || "No se pudo enviar el mensaje");
+      }
+      alert("¡Mensaje enviado con éxito!");
+      formContacto.reset();
+      await cargarContactos();
+    } catch (error) {
+      console.error("Error al enviar el mensaje:", error);
+      alert(error.message || "No se pudo enviar el mensaje. Intenta de nuevo.");
+    }
+  });
+}
 cargarProductos();
+cargarContactos();
