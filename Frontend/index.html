@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mi Tienda — Gestión de Productos</title>
+  <title>Mi Tienda — Inicio</title>
 
   <!-- Fuente moderna -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="inicio.css" />
 </head>
 
 <body>
@@ -21,59 +21,78 @@
     <div class="contenedor nav-contenido">
       <a href="index.html" class="logo"> Mi<strong>Tienda</strong></a>
       <nav class="nav-links">
-        <a href="inicio.html">Inicio</a>
-        <a href="index.html">Productos</a>
+        <a href="index.html" class="activo">Inicio</a>
+                <a href="resenas.html">Reseñas</a>
+        <a href="productos.html">Productos</a>
         <a href="contacto.html">Contacto</a>
       </nav>
     </div>
   </header>
 
-  <!-- ===== CONTENIDO PRINCIPAL ===== -->
+  <!-- ===== CONTENIDO PRINCIPAL DE INICIO ===== -->
   <main class="contenedor" id="inicio">
-    <div class="encabezado-principal">
-      <h1>Sistema de Gestión de Productos</h1>
-      <p>Panel de control conectado a MySQL y Express</p>
-    </div>
+    <!-- Banner Principal (Hero) -->
+    <section class="hero-inicio">
+      <span class="etiqueta-hero">Panel Principal</span>
+      <h1>Bienvenido al sistema administrativo de Mi Tienda</h1>
+      <p>
+        Administra tu catálogo, controla las existencias en tiempo real y mantén la comunicación con tus clientes desde un solo lugar.
+      </p>
+      <div class="hero-botones">
+        <a href="productos.html" class="btn-hero-principal">Administrar Productos</a>
+        <a href="contacto.html" class="btn-hero-secundario">Ir a Contacto</a>
+      </div>
+    </section>
 
-    <div class="panel-tienda">
-      <!-- SECCIÓN 1: Formulario de Registro -->
-      <section class="tarjeta" id="registro">
-        <h2 id="tituloFormulario">Registrar Producto</h2>
-
-        <form id="formularioProducto">
-          <!-- Campo oculto para almacenar el ID en caso de edición -->
-          <input type="hidden" id="productoId" value="" />
-
-          <div class="campo">
-            <label for="nombre">Nombre del producto:</label>
-            <input type="text" id="nombre" placeholder="Ej: Camiseta básica" required />
-          </div>
-
-          <div class="campo">
-            <label for="precio">Precio ($):</label>
-            <input type="number" id="precio" step="0.01" placeholder="Ej: 25000" required />
-          </div>
-
-          <div class="campo">
-            <label for="stock">Stock (cantidad):</label>
-            <input type="number" id="stock" placeholder="Ej: 10" required />
-          </div>
-
-          <div class="acciones-form">
-            <button type="submit" id="btnGuardar" class="btn btn-guardar">Guardar Producto</button>
-            <button type="button" id="btnCancelar" class="btn btn-cancelar" style="display: none;">Cancelar</button>
-          </div>
-        </form>
-      </section>
-
-      <!-- SECCIÓN 2: Lista de Productos -->
-      <section class="tarjeta" id="productos">
-        <h2>Lista de Productos</h2>
-        <div id="listaProductos" class="lista-productos">
-          <!-- Los productos se cargan desde app.js -->
+    <!-- Módulos / Accesos Rápidos -->
+    <section class="grid-accesos">
+      <article class="tarjeta tarjeta-acceso">
+        <div>
+          <div class="icono-modulo">01</div>
+          <h3>Catálogo e Inventario</h3>
+          <p>
+            Registra nuevos artículos, actualiza precios y supervisa las unidades disponibles en bodega.
+          </p>
         </div>
-      </section>
-    </div>
+        <a href="productos.html" class="enlace-modulo">Abrir gestión de productos &rarr;</a>
+      </article>
+
+      <article class="tarjeta tarjeta-acceso">
+        <div>
+          <div class="icono-modulo">02</div>
+          <h3>Operaciones CRUD</h3>
+          <p>
+            Sincronización directa con la base de datos relacional para crear, consultar, editar y eliminar registros.
+          </p>
+        </div>
+        <a href="productos.html" class="enlace-modulo">Ver registros activos &rarr;</a>
+      </article>
+
+      <article class="tarjeta tarjeta-acceso">
+        <div>
+          <div class="icono-modulo">03</div>
+          <h3>Atención y Soporte</h3>
+          <p>
+            Accede al formulario de contacto para enviar consultas, reportes o solicitudes administrativas.
+          </p>
+        </div>
+        <a href="contacto.html" class="enlace-modulo">Ir al formulario &rarr;</a>
+      </article>
+    </section>
+
+    <!-- Resumen de Arquitectura -->
+    <section class="tarjeta barra-tecnologias">
+      <div>
+        <h3>Arquitectura del Proyecto</h3>
+        <p>Entorno conectado y listo para operar</p>
+      </div>
+      <div class="tech-badges">
+        <span class="badge">HTML5 &amp; CSS3</span>
+        <span class="badge">JavaScript</span>
+        <span class="badge">Node.js + Express</span>
+        <span class="badge">MySQL</span>
+      </div>
+    </section>
   </main>
 
   <!-- ===== PIE DE PÁGINA (FOOTER) ===== -->
@@ -82,8 +101,6 @@
       <p>&copy; 2026 Mi Tienda — Proyecto Formativo con Node.js, Express y MySQL.</p>
     </div>
   </footer>
-
-  <script src="app.js"></script>
 </body>
 
 </html>
